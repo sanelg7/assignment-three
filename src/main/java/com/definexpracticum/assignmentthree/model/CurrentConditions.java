@@ -3,8 +3,19 @@ package com.definexpracticum.assignmentthree.model;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
-import java.time.LocalDateTime;
-
 @JsonIgnoreProperties(ignoreUnknown = true)
-public record CurrentConditions(@JsonProperty("currentConditions") Object currentConditions) {
+public record CurrentConditions(
+        @JsonProperty("datetimeepoch") long epoch,
+        double temp,
+        @JsonProperty("feelslike") double feelsLike,
+        double humidity,
+        double dew,
+        double snow,
+        @JsonProperty("windspeed") double windSpeed,
+        String conditions,
+        long sunriseEpoch,
+        long sunsetEpoch
+){
+
+
 }

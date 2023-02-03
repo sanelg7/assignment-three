@@ -3,8 +3,10 @@ target/
 !.mvn/wrapper/maven-wrapper.jar
 !**/src/main/**/target/
 !**/src/test/**/target/
-src/main/resources/api.connection.properties
 
+### Static resources and properties
+src/main/resources/api.connection.properties
+src/main/resources/static/test_current
 ### STS ###
 .apt_generated
 .classpath
