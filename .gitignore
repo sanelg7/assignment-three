@@ -7,6 +7,10 @@ target/
 ### Static resources and properties
 src/main/resources/api.connection.properties
 src/main/resources/static/test_current
+src/main/resources/static/test_daily
+src/main/resources/static/test_weekly
+src/main/resources/static/test_monthly
+
 ### STS ###
 .apt_generated
 .classpath
