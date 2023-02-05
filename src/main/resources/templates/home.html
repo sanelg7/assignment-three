@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>Welcome</title>
+</head>
+<body>
+<h1 th:text="${currentWeather.toString()}"></h1>
+<br>
+<br>
+
+<script>
+    function checkInterval(form) {
+        var interval = form.interval.value;
+        if (interval === 'Daily') {
+            form.action = "/weather/daily";
+        } else {
+            form.action = "/weather/weather-forecast";
+        }
+    }
+</script>
+<form th:action="@{/home}" th:object="${outgoingRequestForm}" method="post">
+    <div>
+        <label>Location:</label>
+        <input type="text" th:field="*{location}" />
+    </div>
+    <div>
+        <label>Select Forecast Date(s):</label>
+        <select th:field="*{interval}">
+            <option value="Daily">Daily</option>
+            <option value="Weekly">Weekly</option>
+            <option value="Monthly">Monthly</option>
+        </select>
+    </div>
+    <input type="submit" th:onclick="'checkInterval(this.form)'"/>
+</form>
+
+
+
+</body>
+</html>

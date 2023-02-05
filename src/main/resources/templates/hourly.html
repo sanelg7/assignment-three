@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>Hourly Weather Report for Today</title>
+
+    <style>
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 20px 0;
+        }
+
+        th, td {
+            padding: 8px;
+            text-align: left;
+            border-bottom: 1px solid #ddd;
+        }
+
+        th {
+            background-color: #ddd;
+        }
+
+        tr:nth-child(even) {
+            background-color: #f2f2f2;
+        }
+
+    </style>
+
+
+</head>
+<body>
+<h1>Hourly Weather Report</h1>
+<p>Location: <span th:text="${hourlyWeather.resolvedAddress()}"></span></p>
+<p>Timezone: <span th:text="${hourlyWeather.timeZone()}"></span></p>
+<table>
+    <thead>
+    <tr>
+        <th>Hour</th>
+        <th>Temperature (°C)</th>
+        <th>Feels Like (°C)</th>
+        <th>Dew (°C)</th>
+        <th>Humidity (%)</th>
+        <th>Precipitation Probability (%)</th>
+        <th>Precipitation Type</th>
+        <th>Wind Speed (m/s)</th>
+        <th>Conditions</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr th:each="hour : ${hourlyWeather.hours()}">
+        <td th:text="${hour.hour()}"></td>
+        <td th:text="${hour.temp}"></td>
+        <td th:text="${hour.feelsLike()}"></td>
+        <td th:text="${hour.dew}"></td>
+        <td th:text="${hour.humidity}"></td>
+        <td th:text="${hour.precipitationProbability()}"></td>
+        <td th:text="${hour.precipitationType}"></td>
+        <td th:text="${hour.windSpeed()}"></td>
+        <td th:text="${hour.conditions}"></td>
+    </tr>
+    </tbody>
+</table>
+</body>
+</html>

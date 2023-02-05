@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Daily Weather Report</title>
+    <style>
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 20px 0;
+        }
+
+        th, td {
+            padding: 8px;
+            text-align: left;
+            border-bottom: 1px solid #ddd;
+        }
+
+        th {
+            background-color: #ddd;
+        }
+
+        tr:nth-child(even) {
+            background-color: #f2f2f2;
+        }
+
+    </style>
+
+</head>
+<body>
+<h1>Daily Weather Report</h1>
+<p>Location: <span th:text="${dailyWeather.resolvedAddress()}"></span></p>
+<p>Timezone: <span th:text="${dailyWeather.timeZone()}"></span></p>
+
+<table>
+    <thead>
+    <tr>
+        <th>Date (yyyy/mm/dd)</th>
+        <th>Max Temp (°C)</th>
+        <th>Min Temp (°C)</th>
+        <th>Temp (°C)</th>
+        <th>Feels Like (°C)</th>
+        <th>Dew Point (°C)</th>
+        <th>Humidity</th>
+        <th>Precipitation Probability (%)</th>
+        <th>Precipitation Type</th>
+        <th>Wind Speed (kph)</th>
+        <th>Sunrise (Local)</th>
+        <th>Sunset (Local)</th>
+        <th>Conditions</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr th:each="day : ${dailyWeather.days}">
+        <td th:text="${day.date()}"></td>
+        <td th:text="${day.tempMax()}"></td>
+        <td th:text="${day.tempMin()}"></td>
+        <td th:text="${day.temp()}"></td>
+        <td th:text="${day.feelsLike()}"></td>
+        <td th:text="${day.dew}"></td>
+        <td th:text="${day.humidity}"></td>
+        <td th:text="${day.precipitationProbability()}"></td>
+        <td th:text="${day.precipitationType}"></td>
+        <td th:text="${day.windSpeed()}"></td>
+        <td th:text="${day.sunrise()}"></td>
+        <td th:text="${day.sunset()}"></td>
+        <td th:text="${day.conditions}"></td>
+    </tr>
+    </tbody>
+</table>
+</body>
+</html>
