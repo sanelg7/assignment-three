@@ -14,7 +14,7 @@ public class URIBuilder {
 
     private static final String unit = "unitGroup=metric";
 
-    private String timeInterval = "&include=";
+    private String timeInterval;
 
     private String range;
 
@@ -36,14 +36,11 @@ public class URIBuilder {
 
 
     public URIBuilder setTimeInterval(String timeInterval) {
-        this.timeInterval = this.timeInterval.concat(timeInterval);
-        System.out.println(timeInterval);
+        this.timeInterval = "&include=" + timeInterval;
         return this;
     }
     public URIBuilder setLocation(String location) {
         this.location = location;
-        System.out.println(location);
-
         return this;
     }
 
