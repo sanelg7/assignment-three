@@ -45,17 +45,12 @@ public class WeatherForecastController {
             HourlyWeather hourlyWeather;
             try {
                 hourlyWeather = mapper.readValue(weatherData, HourlyWeather.class);
-                System.out.println(hourlyWeather);
                 model.setViewName("hourly");
 
                 model.addObject("hourlyWeather", hourlyWeather);
-                System.out.println(model);
             } catch (JsonProcessingException e) {
                 throw new RuntimeException(e);
             }
-
-            System.out.println(hourlyWeather);
-
         }
         else{
             DailyWeather dailyWeather;
@@ -66,8 +61,6 @@ public class WeatherForecastController {
             } catch (JsonProcessingException e) {
                 throw new RuntimeException(e);
             }
-            System.out.println(dailyWeather);
-
         }
 
         return model;
@@ -82,8 +75,6 @@ public class WeatherForecastController {
 
         String location = outgoingHourlyRequest.getLocation();
         String interval = outgoingHourlyRequest.getInterval();
-        System.out.println(location);
-        System.out.println(interval);
         String url;
         uriBuilder
                 .setBaseURL(baseUrl)
@@ -110,8 +101,6 @@ public class WeatherForecastController {
 
         String location = outgoingDailyRequest.getLocation();
         String interval = outgoingDailyRequest.getInterval();
-        System.out.println(location);
-        System.out.println(interval);
         String url;
         uriBuilder
                 .setBaseURL(baseUrl)

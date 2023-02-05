@@ -8,11 +8,11 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.client.RestTemplate;
+import org.springframework.web.servlet.ModelAndView;
 
 @Controller
 @RequestMapping("/")
@@ -33,10 +33,12 @@ public class CurrentWeatherController {
     }
 
     @GetMapping("/home")
-    public String showHomePage(Model model, @ModelAttribute OutgoingRequestForm outgoingRequestForm){
-        model.addAttribute("currentWeather", getCurrentWeather());
-        model.addAttribute("outgoingRequestForm", outgoingRequestForm);
-        return "home";
+    public ModelAndView showHomePage(@ModelAttribute OutgoingRequestForm outgoingRequestForm){
+        ModelAndView modelAndView = new ModelAndView();
+        modelAndView.addObject("currentWeather", getCurrentWeather());
+        modelAndView.addObject("outgoingRequestForm", outgoingRequestForm);
+        modelAndView.setViewName("home");
+        return modelAndView;
 
     }
     @GetMapping("/current-weather")
@@ -49,8 +51,6 @@ public class CurrentWeatherController {
                 .setBaseURL(baseUrl)
                 .setApiKey(apiKey)
                 .build();
-        System.out.println(uriBuilder);
-
 
         String weatherData = template.getForObject(url, String.class);
         ObjectMapper mapper = new ObjectMapper();

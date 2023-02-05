@@ -28,7 +28,6 @@ public class URIBuilder {
                 range + "?" +
                 unit + timeInterval +
                 apiKey + contentType;
-            System.out.println(url);
 
             return url;
 

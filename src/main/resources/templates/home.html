@@ -3,11 +3,65 @@
 <head>
     <meta charset="UTF-8">
     <title>Welcome</title>
+
+    <style>
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 20px 0;
+        }
+
+        th, td {
+            padding: 8px;
+            text-align: left;
+            border-bottom: 1px solid #ddd;
+        }
+
+        th {
+            background-color: #ddd;
+        }
+
+        tr:nth-child(even) {
+            background-color: #f2f2f2;
+        }
+
+    </style>
 </head>
 <body>
-<h1 th:text="${currentWeather.toString()}"></h1>
 <br>
+<h1>Current Weather Report</h1>
 <br>
+<p>Location: <span th:text="${currentWeather.resolvedAddress()}"></span></p>
+<p>Time Zone: <span th:text="${currentWeather.timeZone()}"></span></p>
+
+            <table>
+                <thead>
+                <tr>
+                    <th>Temperature (°C)</th>
+                    <th>Feels Like (°C)</th>
+                    <th>Humidity (%)</th>
+                    <th>Dew Point (°C)</th>
+                    <th>Snow (mm)</th>
+                    <th>Wind Speed (kph)</th>
+                    <th>Conditions</th>
+                    <th>Sunrise</th>
+                    <th>Sunset</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr>
+                    <td th:text="${currentWeather.currentConditions.temp}"></td></td>
+                    <td th:text="${currentWeather.currentConditions.feelsLike}"></td></td>
+                    <td th:text="${currentWeather.currentConditions.humidity}"></td>
+                    <td th:text="${currentWeather.currentConditions.dew}"></td>
+                    <td th:text="${currentWeather.currentConditions.snow}"></td>
+                    <td th:text="${currentWeather.currentConditions.windSpeed}"></td>
+                    <td th:text="${currentWeather.currentConditions.conditions}"></td>
+                    <td th:text="${currentWeather.currentConditions.sunrise}"></td>
+                    <td th:text="${currentWeather.currentConditions.sunset}"></td>
+                </tr>
+                </tbody>
+            </table>
 
 <script>
     function checkInterval(form) {
@@ -19,6 +73,10 @@
         }
     }
 </script>
+
+<h4>Enter city and time interval for weather forecast:</h4>
+<hr>
+
 <form th:action="@{/home}" th:object="${outgoingRequestForm}" method="post">
     <div>
         <label>Location:</label>
