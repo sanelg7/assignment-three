@@ -13,8 +13,8 @@ public record CurrentConditions(
         double snow,
         @JsonProperty("windspeed") double windSpeed,
         String conditions,
-        long sunriseEpoch,
-        long sunsetEpoch
+        String sunrise,
+        String sunset
 ){
 
 
