@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+
+
+<!-- Handling invalid date error -->
+<div th:if="${error}">
+  <p th:text="${error}" style="color: red"></p>
+</div>
+
+<script>
+
+  let counter = 0;
+
+  const intervalId = setInterval(() => {
+    counter++;
+    console.log(counter);
+
+    if (counter === 5) {
+      clearInterval(intervalId);
+      window.location.replace("/home")
+    }
+  }, 1000);
+
+
+</script>
+
+</body>
+</html>
