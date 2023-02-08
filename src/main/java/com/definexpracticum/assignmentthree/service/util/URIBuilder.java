@@ -4,6 +4,7 @@ package com.definexpracticum.assignmentthree.service.util;
 public class URIBuilder {
 
 
+    // URLBuilder class is used to build the outgoing request URL. Used to retrieve data from weather API.
     private String baseURL;
 
     private String location;

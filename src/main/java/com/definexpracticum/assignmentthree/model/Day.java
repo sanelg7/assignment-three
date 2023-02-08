@@ -38,7 +38,8 @@ public record Day(
 
     public Day {
 
-        // Converting epoch time to date in yyyy/mm/dd format.
+        // Compact constructor used to ensure some operations are injected into the actual constructor.
+        // Converting epoch time received to date in yyyy/mm/dd format.
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy/MM/dd");
         LocalDateTime localDate = LocalDateTime.ofEpochSecond(epoch, 0, ZoneOffset.UTC);
         date = localDate.format(formatter);
