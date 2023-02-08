@@ -1,8 +1,4 @@
-package com.definexpracticum.assignmentthree.util;
-
-import jakarta.annotation.PostConstruct;
-import org.springframework.beans.factory.annotation.Value;
-import org.springframework.stereotype.Component;
+package com.definexpracticum.assignmentthree.service.util;
 
 
 public class URIBuilder {

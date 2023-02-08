@@ -1,21 +1,24 @@
 package com.definexpracticum.assignmentthree.rest;
 
-import com.definexpracticum.assignmentthree.model.DailyWeather;
-import com.definexpracticum.assignmentthree.model.HourlyWeather;
 import com.definexpracticum.assignmentthree.model.OutgoingRequestForm;
-import com.definexpracticum.assignmentthree.util.URIBuilder;
-import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.databind.ObjectMapper;
+import com.definexpracticum.assignmentthree.service.WeatherService;
+import com.definexpracticum.assignmentthree.service.util.URIBuilder;
+import com.definexpracticum.assignmentthree.validation.CommaDelimitedLocationValidator;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Controller;
+import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.WebDataBinder;
+import org.springframework.web.bind.annotation.InitBinder;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.client.HttpClientErrorException;
 import org.springframework.web.client.RestTemplate;
 import org.springframework.web.servlet.ModelAndView;
+
+import javax.validation.Valid;
 
 @Controller
 @RequestMapping("/weather")
@@ -28,53 +31,39 @@ public class WeatherForecastController {
     @Value("${base.url}")
     private String baseUrl;
 
+    private final WeatherService weatherService;
+
 
     private final RestTemplate template;
 
     @Autowired
-    public WeatherForecastController(RestTemplate template) {
+    public WeatherForecastController(WeatherService getCurrentWeather, RestTemplate template) {
+        this.weatherService = getCurrentWeather;
         this.template = template;
     }
 
 
-    public ModelAndView generateWeatherModel(String url){
-        String weatherData = template.getForObject(url, String.class);
-        ObjectMapper mapper = new ObjectMapper();
-        ModelAndView model = new ModelAndView();
-        if(weatherData.contains("hours")){
-            HourlyWeather hourlyWeather;
-            try {
-                hourlyWeather = mapper.readValue(weatherData, HourlyWeather.class);
-                model.setViewName("hourly");
-
-                model.addObject("hourlyWeather", hourlyWeather);
-            } catch (JsonProcessingException e) {
-                throw new RuntimeException(e);
-            }
-        }
-        else{
-            DailyWeather dailyWeather;
-            try {
-                dailyWeather = mapper.readValue(weatherData, DailyWeather.class);
-                model.setViewName("daily");
-                model.addObject(dailyWeather);
-            } catch (JsonProcessingException e) {
-                throw new RuntimeException(e);
-            }
-        }
-
-        return model;
-
-
+    // Preprocessing web requests using custom validator.
+    @InitBinder("outgoingRequestForm")
+    public void initBinder(WebDataBinder binder) {
+        binder.addValidators(new CommaDelimitedLocationValidator());
     }
 
     @PostMapping("/daily")
     public ModelAndView requestHourlyWeather(
-            @ModelAttribute OutgoingRequestForm outgoingHourlyRequest,
+            @Valid @ModelAttribute OutgoingRequestForm outgoingRequestForm,
+            BindingResult bindingResult,
             ModelAndView modelAndView){
 
-        String location = outgoingHourlyRequest.getLocation();
-        String interval = outgoingHourlyRequest.getInterval();
+        if(bindingResult.hasErrors()){
+            modelAndView.addObject("locationValidationError", "Please enter a city name, or a comma seperated list (max 3 words) for a more specific location.");
+            modelAndView.addObject(weatherService.getCurrentWeather());
+            modelAndView.setViewName("home");
+            return modelAndView;
+        }
+
+        String location = outgoingRequestForm.getLocation();
+        String interval = outgoingRequestForm.getInterval();
         String url;
         uriBuilder
                 .setBaseURL(baseUrl)
@@ -89,14 +78,15 @@ public class WeatherForecastController {
             throw new HttpClientErrorException(HttpStatus.BAD_REQUEST);
         }
 
-        modelAndView = generateWeatherModel(url);
+        modelAndView = weatherService.generateWeatherModel(url);
 
         return modelAndView;
     }
 
     @PostMapping("/weather-forecast")
     public ModelAndView requestDailyWeather(
-            @ModelAttribute OutgoingRequestForm outgoingDailyRequest,
+            @Valid @ModelAttribute OutgoingRequestForm outgoingDailyRequest,
+            BindingResult bindingResult,
             ModelAndView modelAndView){
 
         String location = outgoingDailyRequest.getLocation();
@@ -120,7 +110,7 @@ public class WeatherForecastController {
             throw new HttpClientErrorException(HttpStatus.BAD_REQUEST);
         }
 
-        modelAndView = generateWeatherModel(url);
+        modelAndView = weatherService.generateWeatherModel(url);
         return modelAndView;
     }
 
