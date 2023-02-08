@@ -1,2 +1,9 @@
-package com.definexpracticum.assignmentthree.config;public class AOPConfig {
+package com.definexpracticum.assignmentthree.config;
+
+import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.EnableAspectJAutoProxy;
+
+@Configuration
+@EnableAspectJAutoProxy
+public class AOPConfig {
 }

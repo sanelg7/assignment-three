@@ -2,16 +2,15 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Title</title>
+    <title>Error Page</title>
 </head>
 <body>
 
 
-<!-- Handling invalid date error -->
-<div th:if="${error}">
-  <p th:text="${error}" style="color: red"></p>
-</div>
-
+<!-- Showing errors -->
+<h1> An error occurred: </h1>
+<p th:text="${errorMessage}"></p>
+<!-- Redirecting to home page -->
 <script>
 
   let counter = 0;

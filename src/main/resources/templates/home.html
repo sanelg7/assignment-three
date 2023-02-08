@@ -95,6 +95,7 @@
     <div th:if="${locationValidationError}">
         <p th:text="${locationValidationError}" style="color: red"></p>
     </div>
+
     <input type="submit" th:onclick="'checkInterval(this.form)'"/>
 </form>
 

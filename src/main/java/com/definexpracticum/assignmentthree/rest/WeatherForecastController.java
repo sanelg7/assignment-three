@@ -85,12 +85,19 @@ public class WeatherForecastController {
 
     @PostMapping("/weather-forecast")
     public ModelAndView requestDailyWeather(
-            @Valid @ModelAttribute OutgoingRequestForm outgoingDailyRequest,
+            @Valid @ModelAttribute OutgoingRequestForm outgoingRequestForm,
             BindingResult bindingResult,
             ModelAndView modelAndView){
 
-        String location = outgoingDailyRequest.getLocation();
-        String interval = outgoingDailyRequest.getInterval();
+        if(bindingResult.hasErrors()){
+            modelAndView.addObject("locationValidationError", "Please enter a city name, or a comma seperated list (max 3 words) for a more specific location.");
+            modelAndView.addObject(weatherService.getCurrentWeather());
+            modelAndView.setViewName("home");
+            return modelAndView;
+        }
+
+        String location = outgoingRequestForm.getLocation();
+        String interval = outgoingRequestForm.getInterval();
         String url;
         uriBuilder
                 .setBaseURL(baseUrl)
