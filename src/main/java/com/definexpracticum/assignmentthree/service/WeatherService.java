@@ -16,21 +16,26 @@ import org.springframework.web.servlet.ModelAndView;
 public class WeatherService {
 
     private final RestTemplate template;
+
+    // Builds URL for outgoing request to the external weather API.
     private static URIBuilder uriBuilder = new URIBuilder();
 
+    // Api key stored in configuration file.
     @Value("${api.key}")
     private String apiKey;
 
+    // Base url for outgoing request, stored in configuration file.
     @Value("${base.url}")
     private String baseUrl;
 
+    // Autowired the rest template
     @Autowired
     public WeatherService(RestTemplate restTemplate) {
         this.template = restTemplate;
 
     }
 
-    // Gets the current weather data to show on homepage using RestTemplate. It can not be called by the user.
+    // Gets the current weather data to show on homepage using RestTemplate.
     public CurrentWeather getCurrentWeather(){
 
         String url = uriBuilder
@@ -53,10 +58,17 @@ public class WeatherService {
     }
 
 
+    // Generates a ModelAndView object that is passed to the view in the controller.
+    // It can map hourly and daily representation according to the incoming weather data, using the prebuilt request url and RestTemplate.
     public ModelAndView generateWeatherModel(String url){
+
+        // URL is checked within the controller method.
+
         String weatherData = template.getForObject(url, String.class);
         ObjectMapper mapper = new ObjectMapper();
         ModelAndView model = new ModelAndView();
+
+        // Hourly and daily data are similar. Hourly data contains a json array "hours".
         if(weatherData.contains("hours")){
             HourlyWeather hourlyWeather;
             try {

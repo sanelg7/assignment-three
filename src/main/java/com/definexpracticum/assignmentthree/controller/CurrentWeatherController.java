@@ -1,4 +1,4 @@
-package com.definexpracticum.assignmentthree.rest;
+package com.definexpracticum.assignmentthree.controller;
 
 import com.definexpracticum.assignmentthree.model.OutgoingRequestForm;
 import com.definexpracticum.assignmentthree.service.WeatherService;
@@ -14,10 +14,11 @@ import org.springframework.web.servlet.ModelAndView;
 @RequestMapping("/")
 public class CurrentWeatherController {
 
-
+    // CurrentWeatherController -> Controller to get current weather for the home page.
     private final WeatherService getCurrentWeatherService;
     private final RestTemplate template;
 
+    // Autowired the rest template and weather service to be used inside controller methods.
     @Autowired
     public CurrentWeatherController(WeatherService getCurrentWeather, RestTemplate template)
     {
@@ -29,6 +30,7 @@ public class CurrentWeatherController {
     @GetMapping("/home")
     public ModelAndView showHomePage(@ModelAttribute OutgoingRequestForm outgoingRequestForm){
         ModelAndView modelAndView = new ModelAndView();
+        // Adding the weather data received to the model and view.
         modelAndView.addObject("currentWeather", getCurrentWeatherService.getCurrentWeather());
         modelAndView.addObject("outgoingRequestForm", outgoingRequestForm);
         modelAndView.setViewName("home");

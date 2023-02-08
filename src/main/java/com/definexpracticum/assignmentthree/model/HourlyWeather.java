@@ -17,6 +17,8 @@ public record HourlyWeather(
 
 
 ) {
+    // Compact constructor used to ensure some operations are injected into the actual constructor.
+    // In this case, it is collecting the hours from days.
     public HourlyWeather{
         hours = days.stream()
                 .flatMap(day -> day.hours().stream())

@@ -9,6 +9,8 @@ import org.springframework.validation.Validator;
 
 public class CommaDelimitedLocationValidator implements Validator {
 
+    // CommaDelimitedLocationValidator -> Validates form input 'location'.
+    // 'location' -> Can be at max three comma seperated words.
     private static final String PATTERN = "^([A-Za-z]+,[A-Za-z]+,[A-Za-z]+|[A-Za-z]+,[A-Za-z]+|[A-Za-z]+)$";
 
     @Override
