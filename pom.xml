@@ -33,11 +33,19 @@
 			<scope>test</scope>
 		</dependency>
 
+		<!-- For templates -->
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-thymeleaf</artifactId>
 		</dependency>
 
+
+		<!-- For validation -->
+		<dependency>
+			<groupId>org.hibernate.validator</groupId>
+			<artifactId>hibernate-validator</artifactId>
+			<version>6.0.13.Final</version>
+		</dependency>
 
 		<dependency>
 			<groupId>org.json</groupId>

@@ -79,7 +79,7 @@
 
 <form th:action="@{/home}" th:object="${outgoingRequestForm}" method="post">
     <div>
-        <label>Location:</label>
+        <label>Location (City/Country):</label>
         <input type="text" th:field="*{location}" />
     </div>
     <div>
@@ -89,6 +89,11 @@
             <option value="Weekly">Weekly</option>
             <option value="Monthly">Monthly</option>
         </select>
+    </div>
+
+    <!-- Validating location input -->
+    <div th:if="${locationValidationError}">
+        <p th:text="${locationValidationError}" style="color: red"></p>
     </div>
     <input type="submit" th:onclick="'checkInterval(this.form)'"/>
 </form>
