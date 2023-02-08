@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Error Page</title>
+</head>
+<body>
+
+
+<!-- Showing errors -->
+<h1> An error occurred: </h1>
+<p th:text="${errorMessage}"></p>
+<!-- Redirecting to home page -->
+<script>
+
+  let counter = 0;
+
+  const intervalId = setInterval(() => {
+    counter++;
+    console.log(counter);
+
+    if (counter === 5) {
+      clearInterval(intervalId);
+      window.location.replace("/home")
+    }
+  }, 1000);
+
+
+</script>
+
+</body>
+</html>
